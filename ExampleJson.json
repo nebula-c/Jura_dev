@@ -1,0 +1,66 @@
+{
+    "config": {
+        "hist": {
+            "bins": 100,
+            "xmax": 200,
+            "xmin": 0
+        },
+        "title": "mytitle",
+        "xlabel": "X_axis_title",
+        "xlimit": {
+            "range": [
+                50000,
+                60000
+            ],
+            "set": true
+        },
+        "xscale": "linear",
+        "ylabel": "Y_axis_title",
+        "ylimit": {
+            "range": [
+                8000,
+                10000
+            ],
+            "set": true
+        },
+        "yscale": "linear"
+    },
+    "dataconfigs": {
+        "data1": {
+            "label": "Data-1",
+            "linecolor": 4,
+            "linestyle": 1,
+            "linewidth": 1,
+            "markercolor": 4,
+            "markersize": 0.5,
+            "markerstyle": 8,
+            "set": true
+        },
+        "data2": {
+            "label": "Data-2",
+            "linecolor": 3,
+            "linestyle": 1,
+            "linewidth": 1,
+            "markercolor": 3,
+            "markersize": 0.9,
+            "markerstyle": 8,
+            "set": true
+        },
+        "data3": {
+            "label": "Data-3",
+            "linecolor": 2,
+            "linestyle": 1,
+            "linewidth": 1,
+            "markercolor": 2,
+            "markersize": 0.9,
+            "markerstyle": 8,
+            "set": true
+        }
+    },
+    "datafiles": [
+        "./testdata1.txt",
+        "./testdata2.txt"
+    ],
+    "mode": "Graph or Hist",
+    "save": true
+}
