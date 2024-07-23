@@ -2,7 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <json.hpp> // Using nolmann/json.hpp
 #include <typeinfo>
 
 #include "TH1.h"
@@ -15,7 +14,6 @@
 #include "TFitResultPtr.h"
 
 #include "Jura.hpp"
-
 using namespace std;
 using json = nlohmann::json;
 
@@ -53,6 +51,7 @@ long long timeDifference(const Time& t1, const Time& t2) {
 
 void test1(char* jsonfilename)
 {
+    
     Jura Jura(jsonfilename);
     json myjson = *(Jura.ReturnJson());
 

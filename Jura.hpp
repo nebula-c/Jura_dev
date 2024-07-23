@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <json.hpp> // Using nolmann/json.hpp
+#include <nlohmann/json.hpp> // Using nolmann/json.hpp
 #include <typeinfo>
 
 #include "TH1.h"
