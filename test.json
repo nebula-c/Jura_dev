@@ -5,16 +5,6 @@
             "xmax": 200,
             "xmin": 0
         },
-        "legend": {
-            "xrange": [
-                0.75,
-                0.95
-            ],
-            "yrange": [
-                0.8,
-                0.95
-            ]
-        },
         "title": "mytitle",
         "xlabel": "X_axis_title",
         "xlimit": {
@@ -28,8 +18,8 @@
         "ylabel": "Y_axis_title",
         "ylimit": {
             "range": [
-                9000,
-                14000
+                8000,
+                10000
             ],
             "set": true
         },
@@ -68,7 +58,8 @@
         }
     },
     "datafiles": [
-        "./testdata1.txt"
+        "./testdata1.txt",
+        "./testdata2.txt"
     ],
     "mode": "Graph or Hist",
     "save": true

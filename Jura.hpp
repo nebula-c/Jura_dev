@@ -26,7 +26,7 @@ private :
     THStack *hs = new THStack("hs","Temporary ttitle");
     string xlabel, ylabel, mytitle;
     TCanvas *c1 = new TCanvas();
-    TLegend *l1 = new TLegend(.75,.80,.95,.95);
+    TLegend *l1 = new TLegend();
 
 public:
 
@@ -56,6 +56,10 @@ public:
                 {"xmin", 0},
                 {"xmax", 200},
                 {"bins", 100}
+            }},
+            {"legend",{
+                {"xrange", {0.75, 0.95}},
+                {"yrange", {0.80, 0.95}}
             }}
         };
         j["datafiles"] = {"./mydata.txt"};
@@ -106,7 +110,7 @@ public:
     vector<string> ReturnFilenames() { return vec_filename; }
 
     void DefaultRead()
-    {
+    {   
         if (myjson.contains("datafiles")) {
             for (const auto& item : myjson["datafiles"].items())
             {
@@ -128,6 +132,11 @@ public:
             xlabel = myjson["config"]["xlabel"];
             ylabel = myjson["config"]["ylabel"];
             mytitle = myjson["config"]["title"];
+            float l_xmin = myjson["config"]["legend"]["xrange"][0];
+            float l_xmax = myjson["config"]["legend"]["xrange"][1];
+            float l_ymin = myjson["config"]["legend"]["yrange"][0];
+            float l_ymax = myjson["config"]["legend"]["yrange"][1];
+            l1 = new TLegend(l_xmin,l_ymin,l_xmax,l_ymax);
         }
         const char* myconsttitle = mytitle.c_str();
         c1 = new TCanvas("c1",myconsttitle,1600,2000);
