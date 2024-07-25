@@ -32,11 +32,7 @@ public:
 
     Jura(){}
 
-    Jura(char* jsonfilename)
-    {
-        LoadingJson(jsonfilename);
-        DefaultRead();
-    }
+    Jura(char* jsonfilename) { LoadingJson(jsonfilename); }
 
     void BuildJsonExample()
     {
@@ -141,6 +137,7 @@ public:
     {
         ifstream myjsonfile(jsonfilename);
         myjsonfile >> myjson;
+        DefaultRead();
     }
 
     json *ReturnJson() { return &myjson; }
