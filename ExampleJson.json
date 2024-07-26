@@ -38,10 +38,10 @@
     "dataconfigs": {
         "data1": {
             "label": "Data-1",
-            "linecolor": 4,
+            "linecolor": [0,0,255],
             "linestyle": 1,
             "linewidth": 1,
-            "markercolor": 4,
+            "markercolor": [0,0,255],
             "markersize": 0.5,
             "markerstyle": 8,
             "set": true

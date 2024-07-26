@@ -27,6 +27,10 @@ private :
     string xlabel, ylabel, mytitle;
     TCanvas *c1 = new TCanvas();
     TLegend *l1 = new TLegend();
+    set<int> generatedNumbers;
+    std::random_device rd; // 하드웨어 랜덤 숫자 생성기
+    
+
 
 public:
 
@@ -66,30 +70,30 @@ public:
         j["dataconfigs"] = {
             {"data1", {
                 {"set", true},
-                {"linecolor", 4},
+                {"linecolor", {255,0,0}},
                 {"linewidth", 1},
                 {"linestyle", 1},
-                {"markercolor", 4},
+                {"markercolor", {255,0,0}},
                 {"markersize", 0.5},
                 {"markerstyle", 8},
                 {"label", "Data-1"}
             }},
             {"data2", {
                 {"set", true},
-                {"linecolor", 3},
+                {"linecolor", {0,255,0}},
                 {"linewidth", 1},
                 {"linestyle", 1},
-                {"markercolor", 3},
+                {"markercolor", {0,255,0}},
                 {"markersize", 0.9},
                 {"markerstyle", 8},
                 {"label", "Data-2"}
             }},
             {"data3", {
                 {"set", true},
-                {"linecolor", 2},
+                {"linecolor", {0,0,255}},
                 {"linewidth", 1},
                 {"linestyle", 1},
-                {"markercolor", 2},
+                {"markercolor", {0,0,255}},
                 {"markersize", 0.9},
                 {"markerstyle", 8},
                 {"label", "Data-3"}
@@ -205,13 +209,26 @@ public:
     {
         if(myjson["dataconfigs"][datalabel]["set"]==true)
         {
-            int mylinecolor =   myjson["dataconfigs"][datalabel]["linecolor"];
+            int mylinecolor_R =   myjson["dataconfigs"][datalabel]["linecolor"][0];
+            int mylinecolor_G =   myjson["dataconfigs"][datalabel]["linecolor"][1];
+            int mylinecolor_B =   myjson["dataconfigs"][datalabel]["linecolor"][2];
             float mylinewidth = myjson["dataconfigs"][datalabel]["linewidth"];
             int mylinestyle =   myjson["dataconfigs"][datalabel]["linestyle"];
-            int mymarkercolor = myjson["dataconfigs"][datalabel]["markercolor"];
+            int mymarkercolor_R = myjson["dataconfigs"][datalabel]["markercolor"][0];
+            int mymarkercolor_G = myjson["dataconfigs"][datalabel]["markercolor"][1];
+            int mymarkercolor_B = myjson["dataconfigs"][datalabel]["markercolor"][2];
             float mymarkersize= myjson["dataconfigs"][datalabel]["markersize"];
             int mymarkerstyle = myjson["dataconfigs"][datalabel]["markerstyle"];
         
+
+            std::mt19937 gen(rd()); // Mersenne Twister 엔진
+    std::uniform_int_distribution<> dis(100, 10000); // 1부터 100 사이의 숫자를 균등 분포로 생성
+            int mylinecolor = dis(gen);
+            int mymarkercolor = dis(gen);
+            generatedNumbers.insert(mylinecolor);
+            generatedNumbers.insert(mymarkercolor);
+            auto temp1 = new TColor(mylinecolor, mylinecolor_R/255, mylinecolor_G/255, mylinecolor_B/255);
+            auto temp2 = new TColor(mymarkercolor, mymarkercolor_R/255, mymarkercolor_G/255, mymarkercolor_B/255);
             myhist->SetLineColor(mylinecolor);
             myhist->SetLineWidth(mylinewidth);
             myhist->SetLineStyle(mylinestyle);
