@@ -10,6 +10,7 @@
 #include "TCanvas.h"
 #include "TLegend.h"
 #include "TMultiGraph.h"
+#include "TColor.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -27,8 +28,10 @@ private :
     string xlabel, ylabel, mytitle;
     TCanvas *c1 = new TCanvas();
     TLegend *l1 = new TLegend();
-    set<int> generatedNumbers;
-    std::random_device rd; // 하드웨어 랜덤 숫자 생성기
+    vector <int> vec_linecolorcodes = {10000};
+    vector <int> vec_markercolorcodes = {20000};
+    vector <TColor*> vec_linecolors;
+    vector <TColor*> vec_markercolors;
     
 
 
@@ -209,30 +212,30 @@ public:
     {
         if(myjson["dataconfigs"][datalabel]["set"]==true)
         {
-            int mylinecolor_R =   myjson["dataconfigs"][datalabel]["linecolor"][0];
-            int mylinecolor_G =   myjson["dataconfigs"][datalabel]["linecolor"][1];
-            int mylinecolor_B =   myjson["dataconfigs"][datalabel]["linecolor"][2];
+            float mylinecolor_R =   myjson["dataconfigs"][datalabel]["linecolor"][0];
+            float mylinecolor_G =   myjson["dataconfigs"][datalabel]["linecolor"][1];
+            float mylinecolor_B =   myjson["dataconfigs"][datalabel]["linecolor"][2];
             float mylinewidth = myjson["dataconfigs"][datalabel]["linewidth"];
             int mylinestyle =   myjson["dataconfigs"][datalabel]["linestyle"];
-            int mymarkercolor_R = myjson["dataconfigs"][datalabel]["markercolor"][0];
-            int mymarkercolor_G = myjson["dataconfigs"][datalabel]["markercolor"][1];
-            int mymarkercolor_B = myjson["dataconfigs"][datalabel]["markercolor"][2];
+            float mymarkercolor_R = myjson["dataconfigs"][datalabel]["markercolor"][0];
+            float mymarkercolor_G = myjson["dataconfigs"][datalabel]["markercolor"][1];
+            float mymarkercolor_B = myjson["dataconfigs"][datalabel]["markercolor"][2];
             float mymarkersize= myjson["dataconfigs"][datalabel]["markersize"];
             int mymarkerstyle = myjson["dataconfigs"][datalabel]["markerstyle"];
         
-
-            std::mt19937 gen(rd()); // Mersenne Twister 엔진
-    std::uniform_int_distribution<> dis(100, 10000); // 1부터 100 사이의 숫자를 균등 분포로 생성
-            int mylinecolor = dis(gen);
-            int mymarkercolor = dis(gen);
-            generatedNumbers.insert(mylinecolor);
-            generatedNumbers.insert(mymarkercolor);
-            auto temp1 = new TColor(mylinecolor, mylinecolor_R/255, mylinecolor_G/255, mylinecolor_B/255);
-            auto temp2 = new TColor(mymarkercolor, mymarkercolor_R/255, mymarkercolor_G/255, mymarkercolor_B/255);
-            myhist->SetLineColor(mylinecolor);
+            int line_last_value = vec_linecolorcodes[vec_linecolorcodes.size()-1];
+            int marker_last_value = vec_markercolorcodes[vec_markercolorcodes.size()-1];
+            TColor *temp1 = new TColor(line_last_value, mylinecolor_R/255, mylinecolor_G/255, mylinecolor_B/255);
+            TColor *temp2 = new TColor(marker_last_value, mymarkercolor_R/255, mymarkercolor_G/255, mymarkercolor_B/255);
+            vec_linecolors.push_back(temp1);
+            vec_markercolors.push_back(temp2);
+            vec_linecolorcodes.push_back(line_last_value+1);
+            vec_markercolorcodes.push_back(marker_last_value+1);
+            cout << line_last_value << endl;
+            myhist->SetLineColor(line_last_value);
             myhist->SetLineWidth(mylinewidth);
             myhist->SetLineStyle(mylinestyle);
-            myhist->SetMarkerColor(mymarkercolor);
+            myhist->SetMarkerColor(marker_last_value);
             myhist->SetMarkerSize(mymarkersize);
             myhist->SetMarkerStyle(mymarkerstyle);
         }
